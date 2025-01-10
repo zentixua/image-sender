@@ -4,10 +4,10 @@ import logging
 from asyncio import Semaphore
 from typing import Literal
 
-import nodriver
 import validators
+import zendriver
 from curl_cffi.requests import AsyncSession
-from nodriver.core.tab import Tab
+from zendriver.core.tab import Tab
 
 
 class BingImages:
@@ -57,14 +57,14 @@ class BingImages:
         await toggle_button.click()
 
     async def _search_urls(self, query: str, max_number: int = 100):
-        browser = await nodriver.start(headless=True)
+        browser = await zendriver.start(headless=True)
         try:
             tab = await browser.get(f'{self.base_url}/images/search?q={query}')
             if not self.safe_search:
                 await self._set_safe_search(tab, 'off')
             image_urls = await self._scrap_urls(tab, max_number)
         finally:
-            browser.stop()
+            await browser.stop()
         return image_urls
 
     async def _download_page(self, url: str, semaphore: Semaphore):

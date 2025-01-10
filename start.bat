@@ -2,7 +2,7 @@
 setlocal
 
 REM Define the path to the virtual environment
-set VENV=venv
+set VENV=.venv
 
 REM Check and create virtual environment if it does not exist
 if not exist "%VENV%\Scripts\python.exe" (
@@ -16,7 +16,7 @@ REM Activate the virtual environment
 call %VENV%\Scripts\activate
 
 REM Install dependencies from requirements.txt
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
 REM Run the app.main module
 python -m app.main
